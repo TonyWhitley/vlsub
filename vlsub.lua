@@ -1866,6 +1866,8 @@ function dump_zip(url, dir, subfileName)
     if openSub.conf.os == "win" then
       -- using tmp dir to download for windows
       tmpDir = os.getenv ("temp")
+      -- (debug to check it worked) 
+      vlc.msg.dbg("[VLsub] temp dir:"..tmpDir)
       if tmpDir == nil then
 	return false
       end
