@@ -322,7 +322,7 @@ local input_table = {} -- General widget id reference
 local select_conf = {} -- Drop down widget / option table association 
 
 local app_name = "VLsub";
-local app_version = "0.10.2";
+local app_version = "0.10.3";
 local app_useragent = app_name.." "..app_version;
 
             --[[ VLC extension stuff ]]--
@@ -1864,9 +1864,13 @@ function dump_zip(url, dir, subfileName)
   if not file_touch(tmpFileName) then
     vlc.msg.dbg("[VLsub] Cant touch:"..tmpFileName)
     if openSub.conf.os == "win" then
-      -- todo for windows
-      return false
-    else
+      -- using tmp dir to download for windows
+      tmpDir = os.getenv ("temp")
+      if tmpDir == nil then
+	return false
+      end
+      tmpFileName = tmpDir..slash..subfileName..".gz"
+    else -- *nix
       -- using tmp dir to download
       tmpFileName = "/tmp/"..subfileName..".gz"
       vlc.msg.dbg("[VLsub] Fixing to:"..tmpFileName)
